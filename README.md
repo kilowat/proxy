@@ -1,4 +1,4 @@
-# MTProto — Quick Start
+# MTProto + Xray (VLESS REALITY) — Quick Start
 
 ## Генерация ключей 🔐
 
@@ -7,6 +7,68 @@
 ```bash
 openssl rand -hex 16
 ```
+
+добавь префикс:
+
+```
+XXXXXXXXXXXX
+```
+
+пример:
+
+```
+ee3f9c1e2ab45c67890abcd1234567890
+```
+
+---
+
+### UUID
+
+```bash
+cat /proc/sys/kernel/random/uuid
+```
+
+используется в `.env` как:
+
+```
+XRAY_UUID=...
+```
+
+---
+
+### REALITY keys
+
+```bash
+docker run --rm teddysun/xray xray x25519
+```
+
+результат:
+
+```
+Private key:
+Public key:
+```
+
+используй:
+
+* Private key → в `.env`
+* Public key → в клиенте
+
+---
+
+### shortId
+
+```bash
+openssl rand -hex 8
+```
+
+используется в `.env`:
+
+```
+XRAY_SHORT_ID=...
+```
+
+---
 
 ## Запуск 🚀
 
@@ -26,6 +88,14 @@ docker compose logs mtproto
 
 ```bash
 docker compose logs mtproto | grep -i proxy
+```
+
+---
+
+## Логи Xray
+
+```bash
+docker compose logs xray
 ```
 
 ---
