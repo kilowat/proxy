@@ -1,6 +1,6 @@
 services:
   mtproto:
-    image: ghcr.io/ellermister/mtproxy:latest
+    image: telegrammessenger/proxy
     container_name: mtproto
     restart: always
     ports:
