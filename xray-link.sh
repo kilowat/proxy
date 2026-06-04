@@ -3,7 +3,7 @@ set -a
 . ./.env
 set +a
 
-PUBLIC_KEY=$(docker run --rm teddysun/xray xray x25519 -i "$XRAY_PRIVATE_KEY" | grep "Password" | awk '{print $3}')
+PUBLIC_KEY=$(docker run --rm teddysun/xray xray x25519 -i "$XRAY_PRIVATE_KEY" | grep "PublicKey" | awk '{print $NF}')
 IP=$(curl -s ifconfig.me)
 
 echo ""
