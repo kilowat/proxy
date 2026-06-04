@@ -98,6 +98,11 @@ docker compose logs mtproto | grep -i proxy
 docker compose logs xray
 ```
 
+##Cылка
+```bash
+ chmod +x xray-link.sh && ./xray-link.sh
+```
+
 ---
 
 ## Ссылка подключения Telegram 📱
