@@ -10,18 +10,29 @@ services:
     env_file:
       - .env
 
+  # Этот контейнер автоматически создаст config.json из шаблона при каждом старте
+  config-preprocessor:
+    image: alpine:latest
+    container_name: xray-config-preprocessor
+    env_file:
+      - .env
+    volumes:
+      - .:/data
+    command: >
+      sh -c "
+      apk add --no-cache gettext &&
+      envsubst < /data/xray-config.json.template > /data/config.json
+      "
+
   xray:
     image: teddysun/xray
     container_name: xray
     restart: always
     ports:
       - "8443:443"
-    env_file:
-      - .env
     volumes:
-      - ./xray-config.json.template:/config.template.json
-    command: >
-      sh -c "
-      envsubst < /config.template.json > /etc/xray/config.json &&
-      xray run -config /etc/xray/config.json
-      "
+      - ./config.json:/etc/xray/config.json
+    command: xray run -config /etc/xray/config.json
+    depends_on:
+      config-preprocessor:
+        condition: service_completed_successfully
