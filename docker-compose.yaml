@@ -19,5 +19,11 @@ services:
     env_file:
       - .env
     volumes:
-      - ./xray-config.json.template:/etc/xray/config.json
+      - type: config
+        source: xray_config
+        target: /etc/xray/config.json
     command: xray run -config /etc/xray/config.json
+
+configs:
+  xray_config:
+    file: ./xray-config.json.template
