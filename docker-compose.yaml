@@ -1,6 +1,8 @@
 services:
   mtproto:
-    image: telegrammessenger/proxy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.mtproto
     container_name: mtproto
     restart: always
     ports:
