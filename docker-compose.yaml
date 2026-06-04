@@ -18,13 +18,9 @@ services:
       - .env
     volumes:
       - .:/data
-    command: >
-      sh -c "
-      chmod 644 /data/xray-config.json.template &&
-      sed -e 's|XRAY_UUID_PLACEHOLDER|'\"$$XRAY_UUID\"'|g'
-          -e 's|XRAY_SERVER_NAME_PLACEHOLDER|'\"$$XRAY_SERVER_NAME\"'|g'
-          -e 's|XRAY_PRIVATE_KEY_PLACEHOLDER|'\"$$XRAY_PRIVATE_KEY\"'|g'
-          -e 's|XRAY_SHORT_ID_PLACEHOLDER|'\"$$XRAY_SHORT_ID\"'|g'
-          /data/xray-config.json.template > /etc/xray/config.json &&
-      xray run -config /etc/xray/config.json
-      "
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        chmod 644 /data/xray-config.json.template
+        sed -e "s|XRAY_UUID_PLACEHOLDER|$XRAY_UUID|g" -e "s|XRAY_SERVER_NAME_PLACEHOLDER|$XRAY_SERVER_NAME|g" -e "s|XRAY_PRIVATE_KEY_PLACEHOLDER|$XRAY_PRIVATE_KEY|g" -e "s|XRAY_SHORT_ID_PLACEHOLDER|$XRAY_SHORT_ID|g" /data/xray-config.json.template > /etc/xray/config.json
+        xray run -config /etc/xray/config.json
