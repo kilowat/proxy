@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   mtproto:
     image: telegrammessenger/proxy
     container_name: mtproto
@@ -10,7 +9,6 @@ services:
       - "443:443"
     env_file:
       - .env
-
 
   xray:
     image: teddysun/xray
