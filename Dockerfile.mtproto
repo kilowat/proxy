@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y \
     git curl build-essential libssl-dev zlib1g-dev \
@@ -7,9 +7,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 WORKDIR /opt/mtproxy
-
-RUN curl -s https://core.telegram.org/getProxyConfig -o proxy-multi.conf && \
-    curl -s https://core.telegram.org/getProxySecret -o proxy-secret
 
 EXPOSE 443
 
