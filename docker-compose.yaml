@@ -21,7 +21,8 @@ services:
     command: >
       sh -c "
       apk add --no-cache gettext &&
-      envsubst < /data/xray-config.json.template > /data/config.json
+      envsubst < /config.template.json > /etc/xray/config.json &&
+      xray run -config /etc/xray/config.json
       "
 
   xray:
