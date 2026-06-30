@@ -1,132 +1,59 @@
-# MTProto + Xray (VLESS REALITY) — Quick Start
+### Xray VLESS-REALITY Docker
 
-## Генерация ключей 🔐
+Быстрое развертывание прокси-сервера VLESS REALITY с помощью Docker Compose.
 
-### MTProto secret
+### Быстрый старт 🚀
 
-```bash
-openssl rand -hex 16
-```
+### 1\. Генерация ключей
 
-добавь префикс:
+Выполни команды в терминале для создания необходимых параметров:
 
-```
-XXXXXXXXXXXX
-```
+bash
 
-пример:
+    # UUID для пользователя
+    cat /proc/sys/kernel/random/uuid
+    
+    # Short ID (8 байт)
+    openssl rand -hex 8
+    
+    # Пара ключей REALITY
+    docker run --rm teddysun/xray xray x25519
+    
 
-```
-ee3f9c1e2ab45c67890abcd1234567890
-```
+Use code with caution.
 
----
+### 2\. Настройка окружения
 
-### UUID
+Создай файл `.env` в корне проекта и заполните его полученными данными:
 
-```bash
-cat /proc/sys/kernel/random/uuid
-```
+ini
 
-используется в `.env` как:
+    XRAY_UUID=ваш_uuid
+    XRAY_PRIVATE_KEY=ваш_private_key
+    XRAY_SHORT_ID=ваш_short_id
+    XRAY_SERVER_NAME=://cloudflare.com
+    PROXY_NAME=MyVlessProxy
+    
 
-```
-XRAY_UUID=...
-```
+Use code with caution.
 
----
+### 3\. Запуск и получение ссылки
 
-### REALITY keys
+Подними контейнер и сгенерируй ссылку для импорта в клиент (Hiddify, Nekobox и др.):
 
-```bash
-docker run --rm teddysun/xray xray x25519
-```
+bash
 
-результат:
+    # Запуск сервера
+    docker compose up -d
+    
+    # Создание ссылки подключения
+    chmod +x xray-link.sh && ./xray-link.sh
+    
 
-```
-Private key:
-Public key:
-```
+Use code with caution.
 
-используй:
+### Управление 🛠️
 
-* Private key → в `.env`
-* Public key → в клиенте
-
----
-
-### shortId
-
-```bash
-openssl rand -hex 8
-```
-
-используется в `.env`:
-
-```
-XRAY_SHORT_ID=...
-```
-
----
-
-## Запуск 🚀
-
-```bash
-docker compose up -d
-```
-
----
-
-## Логи MTProto
-
-```bash
-docker compose logs mtproto
-```
-
-или сразу получить ссылку подключения:
-
-```bash
-docker compose logs mtproto | grep -i proxy
-```
-
----
-
-## Логи Xray
-
-```bash
-docker compose logs xray
-```
-
-##Cылка
-```bash
- chmod +x xray-link.sh && ./xray-link.sh
-```
-
----
-
-## Ссылка подключения Telegram 📱
-
-После запуска MTProto контейнер сам выводит invite-ссылку вида:
-
-```
-tg://proxy?server=SERVER_IP&port=443&secret=SECRET
-```
-
-или web-вариант:
-
-```
-https://t.me/proxy?server=SERVER_IP&port=443&secret=SECRET
-```
-
-Если нужно сформировать вручную:
-
-```bash
-echo "https://t.me/proxy?server=$(curl -s ifconfig.me)&port=443&secret=$SECRET"
-```
-
-(SECRET берётся из `.env`)
-
----
-
-Готово ✅
+*   **Логи сервера:** `docker compose logs xray`
+*   **Перезапуск:** `docker compose restart xray`
+*   **Остановка:** `docker compose down`
