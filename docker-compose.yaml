@@ -1,13 +1,4 @@
 services:
-  mtproto:
-    image: telegrammessenger/proxy:latest
-    container_name: mtproto
-    restart: always
-    ports:
-      - "443:443"
-    env_file:
-      - .env
-
   xray:
     image: teddysun/xray
     container_name: xray
